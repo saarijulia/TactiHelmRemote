@@ -6,7 +6,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import java.io.IOException;
@@ -65,11 +64,10 @@ public class MainActivity extends AppCompatActivity {
         } while (!btSocket.isConnected() && counter < 5);
 
 
-        OutputStream btOut = null;
         // Try to connect to the outputstream
         try {
-             btOut = btSocket.getOutputStream();
-           // OutputStreamWriter writer = new OutputStreamWriter(btOut);
+            OutputStream btOut = btSocket.getOutputStream();
+            // OutputStreamWriter writer = new OutputStreamWriter(btOut);
             btOut.write(48); // the code to run the loop in the arduino
             btOut.flush();
             System.out.println("OUTPUT STREAM FLUSHED");
@@ -78,8 +76,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         System.out.println("Bluetooth connection:" + btSocket.isConnected());
-
-
 
         /*
         InputStream btIn = null;
@@ -109,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+/*
 
         //Then try to close the connection
         try {
@@ -118,5 +114,8 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         System.out.println(btSocket.isConnected());
+    }
+
+ */
     }
 }
