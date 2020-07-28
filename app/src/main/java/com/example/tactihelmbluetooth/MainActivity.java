@@ -17,6 +17,8 @@ import java.util.UUID;
 public class MainActivity extends AppCompatActivity {
     private static final UUID hc06_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
     private byte b;
+    private BluetoothThread btThread = null;
+
     Button northNear, northFar;
 
     @Override
