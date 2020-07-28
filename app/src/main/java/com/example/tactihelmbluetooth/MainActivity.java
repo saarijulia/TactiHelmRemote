@@ -6,6 +6,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,11 +18,16 @@ import java.util.UUID;
 public class MainActivity extends AppCompatActivity {
     private static final UUID hc06_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
     private byte b;
+    Button northNear, northFar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Assign buttons from view
+        northNear = (Button) findViewById(R.id.button_north_near);
+        northFar = (Button) findViewById(R.id.button_north_far);
 
         // connecting to the device's inbuilt bluetooth adapter
         BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -58,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
         } while (!btSocket.isConnected() && counter < 5);
 
 
-
+        OutputStream btOut = null;
         // Try to connect to the outputstream
         try {
-            OutputStream btOut = btSocket.getOutputStream();
+             btOut = btSocket.getOutputStream();
            // OutputStreamWriter writer = new OutputStreamWriter(btOut);
             btOut.write(48); // the code to run the loop in the arduino
             btOut.flush();
@@ -72,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println("Bluetooth connection:" + btSocket.isConnected());
 
+
+
+        /*
         InputStream btIn = null;
         try {
             // Establishing input stream
@@ -90,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
             ex.printStackTrace();
 
         }
+
+         */
 
 
 

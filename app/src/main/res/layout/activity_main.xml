@@ -1,18 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+<RelativeLayout android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
 
     <TextView
+        android:id="@+id/app_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="TactiHelm Remote"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:textSize="36dp"
+         />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/button_north_far"
+        android:layout_height="80dp"
+        android:layout_width="150dp"
+
+        android:hint="@string/far"
+
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/app_title"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@android:color/holo_orange_light"
+
+
+
+    />
+
+    <Button
+
+        android:id="@+id/button_north_near"
+        android:layout_height="80dp"
+        android:layout_width="150dp"
+
+        android:hint="@string/near"
+
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/button_north_far"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@android:color/holo_red_light"
+
+        />
+
+</RelativeLayout>
