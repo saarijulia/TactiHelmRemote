@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import java.io.IOException;
@@ -17,9 +18,14 @@ import java.util.UUID;
 public class MainActivity extends AppCompatActivity {
     private static final UUID hc06_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
     private byte b;
-    private BluetoothThread btThread = null;
 
-    Button northNear, northFar;
+    Button northNearButton, northFarButton; // declaring button variables
+
+    // declaring objects needed for bluetooth connection
+    BluetoothAdapter btAdapter;
+    BluetoothSocket btSocket;
+    BluetoothDevice btDevice;
+    BluetoothThread btThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +33,41 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Assign buttons from view
-        northNear = (Button) findViewById(R.id.button_north_near);
-        northFar = (Button) findViewById(R.id.button_north_far);
+        northNearButton = (Button) findViewById(R.id.button_north_near);
+        northFarButton = (Button) findViewById(R.id.button_north_far);
 
+        // Setting onClick listeners for the buttons
+        northFarButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                if(btSocket.isConnected() && btThread != null) {
+                // ASCII code for 0
+                    btThread.send(49);
+                    System.out.println("WRITING CODE NF");
+
+                } else {
+                    System.err.println("UNABLE TO SEND CODE NF");
+                }
+
+
+
+            }
+        });
+
+        northNearButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
+                if(btSocket.isConnected() && btThread != null) {
+                     // ASCII code for 1
+                    btThread.send(48);
+                    System.out.println("WRITING CODE NN");
+                } else {
+                    System.err.println("UNABLE TO SEND CODE NN");
+                }
+
+            }
+        });
+
+        initiateBluetooth();
+/*
         // connecting to the device's inbuilt bluetooth adapter
         BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -78,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         System.out.println("Bluetooth connection:" + btSocket.isConnected());
-
+*/
         /*
         InputStream btIn = null;
         try {
@@ -120,4 +158,35 @@ public class MainActivity extends AppCompatActivity {
 
  */
     }
-}
+
+    private void initiateBluetooth(){
+            btAdapter = BluetoothAdapter.getDefaultAdapter();
+            // attempt to connect to the bluetooth module
+            btDevice = btAdapter.getRemoteDevice("98:D3:51:FD:A2:55");
+
+            // create the socket
+            try {
+
+                btSocket = btDevice.createRfcommSocketToServiceRecord(hc06_UUID);
+                btSocket.connect();
+                System.out.println("Connected to bluetooth");
+
+
+
+
+
+            } catch (IOException e) {
+                System.out.println("ERROR in connecting to bluetooth socket");
+                e.printStackTrace();
+
+            }
+
+
+                btThread = new BluetoothThread(btSocket);
+
+                btThread.run();
+
+
+
+        }
+    }

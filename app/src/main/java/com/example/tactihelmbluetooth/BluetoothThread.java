@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 /**
  * A thread to handle bluetooth events
@@ -30,6 +31,7 @@ public class BluetoothThread extends Thread {
         try {
             tempIn = btSocket.getInputStream();
             tempOut = btSocket.getOutputStream();
+            System.out.println("Connected to IO streams");
 
         } catch (IOException e) {
             System.out.println("ERROR IN CONNECTING TO IO STREAMS");
@@ -51,7 +53,7 @@ public class BluetoothThread extends Thread {
     // looks for bluetoothmessages
     public void run() {
         BufferedReader btReader = new BufferedReader(new InputStreamReader(input));
-        while(true) {
+       /* while(true) {
             try {
                 String btMessage = btReader.readLine();
                 System.out.println(btMessage);
@@ -60,13 +62,20 @@ public class BluetoothThread extends Thread {
                 e.printStackTrace();
                 break;
             }
-        }
+        } */
 
     }
 
-    public void write( byte bytes) {
+    public void send(int code) {
         try {
-            output.write(bytes);
+
+
+            OutputStreamWriter outputWrite = new OutputStreamWriter(output);
+            output.write(code);
+            output.flush();
+            System.out.println("Sending code to bluetooth");
+
+
         } catch (IOException e) {
             System.out.println("ERROR IN WRITING TO OUTPUT STREAM");
             e.printStackTrace();
