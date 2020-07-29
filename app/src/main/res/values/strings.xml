@@ -2,5 +2,6 @@
     <string name="app_name">TactiHelm</string>
     <string name="near">NEAR</string>
     <string name="far">FAR</string>
+    <string name="icon_description">An icon of a person riding a bicycle, viewed from above</string>
 
 </resources>

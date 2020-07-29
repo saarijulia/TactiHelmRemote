@@ -15,13 +15,27 @@
         android:textSize="36dp"
          />
 
+    <ImageView
+        android:id="@+id/cyclistIcon"
+        android:layout_width="138dp"
+        android:layout_height="229dp"
+        android:layout_below="@id/button_north_near"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+
+        android:contentDescription="@string/icon_description"
+        app:srcCompat="@drawable/cyclist_girl"
+
+        />
+
     <Button
         android:id="@+id/button_north_far"
-        android:layout_height="80dp"
-        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_width="50dp"
 
         android:hint="@string/far"
 
+        android:background="@drawable/circle_button"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/app_title"
         android:layout_marginTop="16dp"
@@ -34,16 +48,50 @@
     <Button
 
         android:id="@+id/button_north_near"
-        android:layout_height="80dp"
-        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_width="50dp"
 
         android:hint="@string/near"
 
+        android:background="@drawable/circle_button"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/button_north_far"
         android:layout_marginTop="16dp"
         android:backgroundTint="@android:color/holo_red_light"
 
         />
+
+    <Button
+        android:id="@+id/button_east_near"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+
+        android:layout_below="@+id/button_north_near"
+
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="91dp"
+        android:layout_toRightOf="@id/cyclistIcon"
+        android:background="@drawable/circle_button"
+
+        android:backgroundTint="@android:color/holo_red_light"
+
+
+        android:hint="@string/near" />
+    <Button
+        android:id="@+id/button_east_far"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+
+        android:layout_below="@+id/button_north_near"
+
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="91dp"
+        android:layout_toRightOf="@id/button_east_near"
+        android:background="@drawable/circle_button"
+
+        android:backgroundTint="@android:color/holo_orange_light"
+
+
+        android:hint="@string/far" />
 
 </RelativeLayout>

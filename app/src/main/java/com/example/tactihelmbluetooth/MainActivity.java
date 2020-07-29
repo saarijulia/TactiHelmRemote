@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private static final UUID hc06_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
     private byte b;
 
-    Button northNearButton, northFarButton; // declaring button variables
+    Button northNearButton, northFarButton, eastNearButton, eastFarButton; // declaring button variables
 
     // declaring objects needed for bluetooth connection
     BluetoothAdapter btAdapter;
@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         // Assign buttons from view
         northNearButton = (Button) findViewById(R.id.button_north_near);
         northFarButton = (Button) findViewById(R.id.button_north_far);
+        eastNearButton = (Button) findViewById(R.id.button_east_near);
+        eastFarButton = (Button) findViewById(R.id.button_east_far);
 
         // Setting onClick listeners for the buttons
         northFarButton.setOnClickListener(new View.OnClickListener(){
@@ -65,6 +67,33 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        eastNearButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
+                if(btSocket.isConnected() && btThread != null) {
+                    // ASCII code for 1
+                    btThread.send(50);
+                    System.out.println("WRITING CODE EN");
+                } else {
+                    System.err.println("UNABLE TO SEND CODE EN");
+                }
+
+            }
+        });
+
+        eastFarButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
+                if(btSocket.isConnected() && btThread != null) {
+                    // ASCII code for 1
+                    btThread.send(51);
+                    System.out.println("WRITING CODE EN");
+                } else {
+                    System.err.println("UNABLE TO SEND CODE EN");
+                }
+
+            }
+        });
+
 
         initiateBluetooth();
 /*
