@@ -7,9 +7,11 @@
 
     <TextView
         android:id="@+id/app_title"
+        android:hint="@string/app_name"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TactiHelm Remote"
+
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
         android:textSize="36dp"
@@ -93,5 +95,78 @@
 
 
         android:hint="@string/far" />
+
+    <Button
+        android:id="@+id/button_south_near"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+
+        android:layout_below="@+id/cyclistIcon"
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="-145dp"
+        android:layout_marginTop="0dp"
+
+
+
+
+        android:background="@drawable/circle_button"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:hint="@string/near" />
+
+    <Button
+        android:id="@+id/button_south_far"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+
+        android:layout_below="@+id/button_south_near"
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="-145dp"
+
+        android:layout_marginTop="16dp"
+
+
+        android:layout_toRightOf="@id/button_east_near"
+        android:background="@drawable/circle_button"
+        android:backgroundTint="@android:color/holo_orange_light"
+        android:hint="@string/far" />
+
+    <Button
+        android:id="@+id/button_west_near"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+
+        android:layout_below="@+id/button_north_near"
+
+
+        android:layout_centerInParent="true"
+
+        android:layout_marginTop="91dp"
+        android:layout_marginRight="-2dp"
+        android:layout_toLeftOf="@+id/cyclistIcon"
+        android:background="@drawable/circle_button"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:hint="@string/near" />
+
+
+    <Button
+        android:id="@+id/button_west_far"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+
+        android:layout_below="@+id/button_north_near"
+
+
+        android:layout_centerInParent="true"
+
+
+        android:layout_marginTop="91dp"
+        android:layout_marginRight="16dp"
+        android:layout_toLeftOf="@+id/button_west_near"
+        android:background="@drawable/circle_button"
+        android:backgroundTint="@android:color/holo_orange_light"
+        android:hint="@string/far" />
+
 
 </RelativeLayout>

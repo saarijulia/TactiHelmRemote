@@ -67,18 +67,19 @@ public class BluetoothThread extends Thread {
     }
 
     public void send(int code) {
-        try {
 
+        if (btSocket.isConnected()) {
 
-            OutputStreamWriter outputWrite = new OutputStreamWriter(output);
-            output.write(code);
-            output.flush();
-            System.out.println("Sending code to bluetooth");
+            try {
+                OutputStreamWriter outputWrite = new OutputStreamWriter(output);
+                output.write(code);
+                output.flush();
+                System.out.println("Sending code to bluetooth");
 
-
-        } catch (IOException e) {
-            System.out.println("ERROR IN WRITING TO OUTPUT STREAM");
-            e.printStackTrace();
+            } catch (IOException e) {
+                System.out.println("ERROR IN WRITING TO OUTPUT STREAM");
+                e.printStackTrace();
+            }
         }
     }
 
