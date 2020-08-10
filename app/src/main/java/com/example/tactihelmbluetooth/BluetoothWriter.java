@@ -12,15 +12,16 @@ import java.io.OutputStreamWriter;
 /**
  * A thread to handle bluetooth events
  */
-public class BluetoothThread extends Thread {
+public class BluetoothWriter extends Thread {
 
     private final BluetoothSocket btSocket;
-    private final InputStream input;
-    private final OutputStream output;
+    private InputStream input;
+    private OutputStream output;
+
 
     public static final int NORTH_NEAR = 48;
 
-    public BluetoothThread(BluetoothSocket socket) {
+    public BluetoothWriter(BluetoothSocket socket) {
         this.btSocket = socket;
 
         // creating temporary input and output streams
@@ -48,11 +49,15 @@ public class BluetoothThread extends Thread {
             System.out.println("ERROR IN FLUSHING OUTPUT");
             return;
         }
+
+
+
+
     }
 
-    // looks for bluetoothmessages
     public void run() {
-        BufferedReader btReader = new BufferedReader(new InputStreamReader(input));
+
+        }
        /* while(true) {
             try {
                 String btMessage = btReader.readLine();
@@ -64,7 +69,7 @@ public class BluetoothThread extends Thread {
             }
         } */
 
-    }
+
 
     public void send(int code) {
 

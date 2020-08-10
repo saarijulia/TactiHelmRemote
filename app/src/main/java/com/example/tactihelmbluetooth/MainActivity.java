@@ -8,6 +8,9 @@ import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,18 +26,20 @@ public class MainActivity extends AppCompatActivity {
     Button northNearButton, northFarButton, eastNearButton, eastFarButton, southNearButton,
             southFarButton, westNearButton, westFarButton;
 
+    TextView statusText;
+
     // declaring objects needed for bluetooth connection
     BluetoothAdapter btAdapter;
     BluetoothSocket btSocket;
     BluetoothDevice btDevice;
-    BluetoothThread btThread;
+    BluetoothWriter btWriter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initiateBluetooth();
+
 
         // Assign buttons from view
         northNearButton = (Button) findViewById(R.id.button_north_near);
@@ -46,154 +51,24 @@ public class MainActivity extends AppCompatActivity {
         westNearButton = (Button) findViewById(R.id.button_west_near);
         westFarButton = (Button) findViewById(R.id.button_west_far);
 
+        statusText = (TextView) findViewById(R.id.statusText) ;
+
+        initiateBluetooth();
+
         // Setting onClick listeners for the buttons
 
         //trying to separate onclick listener into a different class
-        northNearButton.setOnClickListener(new buttonOnCLickListener(btThread,"NN"));
-        northFarButton.setOnClickListener(new buttonOnCLickListener(btThread, "NF"));
-        eastNearButton.setOnClickListener(new buttonOnCLickListener(btThread, "EN"));
-        eastFarButton.setOnClickListener(new buttonOnCLickListener(btThread, "EF"));
-        southNearButton.setOnClickListener(new buttonOnCLickListener(btThread, "SN"));
-        southFarButton.setOnClickListener(new buttonOnCLickListener(btThread, "SF"));
-        westNearButton.setOnClickListener(new buttonOnCLickListener(btThread, "WN"));
-        westFarButton.setOnClickListener(new buttonOnCLickListener(btThread, "WF"));
+        northNearButton.setOnClickListener(new buttonOnCLickListener(btWriter, this, "NN"));
+        northFarButton.setOnClickListener(new buttonOnCLickListener(btWriter, this, "NF"));
+        eastNearButton.setOnClickListener(new buttonOnCLickListener(btWriter, this, "EN"));
+        eastFarButton.setOnClickListener(new buttonOnCLickListener(btWriter, this, "EF"));
+        southNearButton.setOnClickListener(new buttonOnCLickListener(btWriter, this, "SN"));
+        southFarButton.setOnClickListener(new buttonOnCLickListener(btWriter, this, "SF"));
+        westNearButton.setOnClickListener(new buttonOnCLickListener(btWriter, this, "WN"));
+        westFarButton.setOnClickListener(new buttonOnCLickListener(btWriter, this, "WF"));
 
 
 
-
-/*
-        eastNearButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view) {
-                if(btSocket.isConnected() && btThread != null) {
-                    // ASCII code for 1
-                    btThread.send(50);
-                    System.out.println("WRITING CODE EN");
-                } else {
-                    System.err.println("UNABLE TO SEND CODE EN");
-                }
-
-            }
-        });
-
-        eastFarButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view) {
-                if(btSocket.isConnected() && btThread != null) {
-                    // ASCII code for 1
-                    btThread.send(51);
-                    System.out.println("WRITING CODE EN");
-                } else {
-                    System.err.println("UNABLE TO SEND CODE EN");
-                }
-
-            }
-        });
-
-        southNearButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view) {
-                if(btSocket.isConnected() && btThread != null) {
-                    // ASCII code for 1
-                    btThread.send(52);
-                    System.out.println("WRITING CODE SN");
-                } else {
-                    System.err.println("UNABLE TO SEND CODE SN");
-                }
-
-            }
-        });
-
-        southFarButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view) {
-                if(btSocket.isConnected() && btThread != null) {
-                    // ASCII code for 1
-                    btThread.send(53);
-                    System.out.println("WRITING CODE SF");
-                } else {
-                    System.err.println("UNABLE TO SEND CODE SF");
-                }
-
-            }
-        });
-
-        westNearButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view) {
-                if(btSocket.isConnected() && btThread != null) {
-                    // ASCII code for 1
-                    btThread.send(54);
-                    System.out.println("WRITING CODE WN");
-                } else {
-                    System.err.println("UNABLE TO SEND CODE WN");
-                }
-
-            }
-        });
-
-        westFarButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view) {
-                if(btSocket.isConnected() && btThread != null) {
-                    // ASCII code for 1
-                    btThread.send(55);
-                    System.out.println("WRITING CODE WF");
-                } else {
-                    System.err.println("UNABLE TO SEND CODE WF");
-                }
-
-            }
-        });
-
-
-*/
-
-
-/*
-        // connecting to the device's inbuilt bluetooth adapter
-        BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        // prints out the bluetooth paired devices
-        System.out.println(btAdapter.getBondedDevices());
-
-        // Specify the hc-06 bluetooth device - hard coded for now
-        BluetoothDevice hc06 = btAdapter.getRemoteDevice("98:D3:51:FD:A2:55");
-
-        // Check that we are connected to the right device
-        System.out.println(hc06.getName());
-
-        // Creating the Bluetooth socket to connect to the device
-        BluetoothSocket btSocket = null;
-
-        // a do-loop to try and connect until a connection is established
-        int counter = 0;
-        do {
-
-            try {
-                btSocket = hc06.createRfcommSocketToServiceRecord(hc06_UUID);
-                // connect to the socket - the hc06 module is the server and the app is the client
-                btSocket.connect();
-                System.out.println(btSocket.isConnected());
-                System.out.println(btSocket);
-
-            } catch (IOException e) {
-                System.out.println("Unable to connect to socket, attempt nro " + counter);
-                e.printStackTrace();
-            }
-
-            counter++; // attempts to connect 5 times
-
-        } while (!btSocket.isConnected() && counter < 5);
-
-
-        // Try to connect to the outputstream
-        try {
-            OutputStream btOut = btSocket.getOutputStream();
-            // OutputStreamWriter writer = new OutputStreamWriter(btOut);
-            btOut.write(48); // the code to run the loop in the arduino
-            btOut.flush();
-            System.out.println("OUTPUT STREAM FLUSHED");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("Bluetooth connection:" + btSocket.isConnected());
-*/
         /*
         InputStream btIn = null;
         try {
@@ -259,11 +134,14 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-                btThread = new BluetoothThread(btSocket);
+                btWriter = new BluetoothWriter(btSocket);
 
-                btThread.run();
+                btWriter.run();
 
 
+        }
 
+        public void setStatus(String s){
+        statusText.setText(s);
         }
     }
