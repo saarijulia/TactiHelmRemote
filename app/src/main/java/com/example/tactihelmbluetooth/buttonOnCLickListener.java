@@ -3,6 +3,9 @@ package com.example.tactihelmbluetooth;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * Button listener sends bluetooth signals to the prototype when a button is pressed
+ */
 public class buttonOnCLickListener implements View.OnClickListener {
     private BluetoothWriter btWriter;
     private int sendCode;
@@ -10,6 +13,7 @@ public class buttonOnCLickListener implements View.OnClickListener {
     private String code;
 
 
+    // The codes for each button click - arduino triggers the cues based on the int code
     private static final int NORTH_NEAR = 48;
     private static final int NORTH_FAR = 49;
     private static final int EAST_NEAR = 50;
@@ -25,7 +29,7 @@ public class buttonOnCLickListener implements View.OnClickListener {
         this.mainActivity = mainActivity;
         this.code = code;
 
-        // Assigning the String codes to ints
+        // Assigning the String codes to the int codes declared earlier
         if (code.equals("NN")) {
             this.sendCode = NORTH_NEAR;
         } else if (code.equals("NF")) {

@@ -10,39 +10,36 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
 /**
- * A thread to handle bluetooth events
+ * A thread to handle bluetooth events - send the codes to the HC-06 bluetooth module
+ * Each code signals the prototype to trigger a specific tactile cue
  */
 public class BluetoothWriter extends Thread {
 
     private final BluetoothSocket btSocket;
-    private InputStream input;
     private OutputStream output;
 
 
-    public static final int NORTH_NEAR = 48;
-
+    // Constructor attempts to connect to the output stream of the bluetooth device
     public BluetoothWriter(BluetoothSocket socket) {
         this.btSocket = socket;
 
-        // creating temporary input and output streams
-        InputStream tempIn = null;
+        // creating temporary output streams
         OutputStream tempOut = null;
 
         // Attempt to connect to the bluetooth servers IO streams
         try {
-            tempIn = btSocket.getInputStream();
             tempOut = btSocket.getOutputStream();
             System.out.println("Connected to IO streams");
 
         } catch (IOException e) {
-            System.out.println("ERROR IN CONNECTING TO IO STREAMS");
+            System.out.println("ERROR IN CONNECTING TO IO STREAM");
             e.printStackTrace();
         }
 
-        input = tempIn;
         output = tempOut;
 
         try {
+            // Test the connection
             output.flush();
 
         } catch (IOException e) {
@@ -55,22 +52,15 @@ public class BluetoothWriter extends Thread {
 
     }
 
+    // Empty method - needed for thread object
     public void run() {
 
         }
-       /* while(true) {
-            try {
-                String btMessage = btReader.readLine();
-                System.out.println(btMessage);
-            } catch (IOException e) {
-                System.out.println("ERROR IN READING FROM INPUT STREAM");
-                e.printStackTrace();
-                break;
-            }
-        } */
 
-
-
+    /**
+     * Method to send codes to the bluetooth module
+     * @param code - Code for triggering tactile cues
+     */
     public void send(int code) {
 
         if (btSocket.isConnected()) {
